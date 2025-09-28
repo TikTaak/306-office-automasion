@@ -1,13 +1,12 @@
-const express = require('express')
-const routes = require('./routes')
+const express = require('express');
+const routes = require('./routes');
 
-const app = express()
+const app = express();
 
-app.use(express.json())   // برای JSON
-app.use(express.urlencoded({ extended: true }))
-app.use(express.static('public'))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static('public'));
 
-// ثبت روترها
-app.use('/api', routes)
+app.use('/api', routes);
 
-module.exports = app
+module.exports = app;

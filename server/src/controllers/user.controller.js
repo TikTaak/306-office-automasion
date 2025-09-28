@@ -1,8 +1,8 @@
-const { getAllUsers } = require('../services/user.service')
+const { getAllUsers } = require('../services/user.service');
 
 async function getUsers(req, res) {
-  const users = await getAllUsers()
-  res.json(users)
+    const users = await getAllUsers();
+    res.json(users);
 }
 
-module.exports = { getUsers }
+module.exports = { getUsers };
