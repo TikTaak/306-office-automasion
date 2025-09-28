@@ -1,11 +1,11 @@
-const express = require('express');
-const app = express();
-const port = 3000;
+const http = require('http')
+const app = require('./src/app')
+const { initSocket } = require('./src/sockets')
 
-app.get('/', (req, res) => {
-    res.send('Hello World!');
-});
+const server = http.createServer(app)
+initSocket(server) // راه‌اندازی socket.io
 
-app.listen(port, () => {
-    console.log(`Example app listening on port ${port}`);
-});
+const PORT = process.env.PORT || 3000
+server.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`)
+})
