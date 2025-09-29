@@ -1,14 +1,14 @@
-module.exports = (io, socket) => {
-    socket.on('message', (data) => {
-        console.log('📩 دریافت پیام:', data);
+const { createMessage } = require('../services/message.service');
 
-        io.emit('message', {
-            type: 'chat',
-            payload: {
-                text: data.payload.text,
-                user: data.payload.user || 'ناشناس',
-                time: new Date().toISOString(),
-            },
+module.exports =  (io, socket) => {
+    socket.on('server-message', async (data) => {
+        console.log(' 📩 - Message received:', data);
+        let message = await createMessage({
+            text: data.text,
+            fromUserId: data.fromUserId,
+            toUserId: data.toUserId,
         });
+
+        io.emit('message', {...message});
     });
 };

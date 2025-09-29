@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+    <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+    <link rel="stylesheet" href="styles.css">
+    <title>Dood</title>
+</head>
+
+<body>
+
+    <div class="container">
+        <span id="server-status">Connecting ...</span>
+        <div class="top" id="online-users"> </div>
+        <div class="bottom">
+            <div class="left-side">
+                <ul id="messages"> </ul>
+                <div class="send-message-box">
+                    <input type="text" id="messageInput" placeholder="پیام خود را وارد کنید">
+                    <input type="button" value="Send" id="sendButton">
+                </div>
+            </div>
+            <div class="right-side">
+                <button id="logout">Logout</button>
+                <span id="username">unknown</span>
+            </div>
+        </div>
+    </div>
+
+
+
+</body>
+<script src="./renderer.js"></script>
+
+</html>

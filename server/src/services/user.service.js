@@ -1,8 +1,25 @@
+const prisma = require('../db/prismaClient');
+
 async function getAllUsers() {
-    return [
-        { id: 1, name: 'Ali' },
-        { id: 2, name: 'Sara' },
-    ];
+    return await prisma.user.findMany();
 }
 
-module.exports = { getAllUsers };
+async function createUser(name) {
+    return await prisma.user.create({
+        data: { name },
+    });
+}
+
+async function deleteUser(id) {
+    return await prisma.user.delete({
+        where: { id: Number(id) },
+    });
+}
+
+async function getUserById(id) {
+    return await prisma.user.findUnique({
+        where: { id: Number(id) },
+    });
+}
+
+module.exports = { getAllUsers, createUser, deleteUser, getUserById };
