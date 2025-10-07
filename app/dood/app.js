@@ -2,8 +2,10 @@ const { app, BrowserWindow, ipcMain, screen } = require('electron');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
+const userManager = require('./userManager.js');
 
 let mainWindow;
+
 const userFile = path.join(app.getPath('userData'), 'user.json');
 // const userFile =  path.join(__dirname, 'user.json');
 console.log(userFile);
@@ -42,11 +44,9 @@ function showPersistentNotification(sender, message, messageId) {
         },
     });
 
-    // ذخیره پنجره و id
     win.__notificationId = id;
     notifications.push(win);
 
-    // محتوای HTML نوتیف
     win.loadURL(
         'data:text/html;charset=utf-8,' +
             encodeURIComponent(`
@@ -74,7 +74,6 @@ function showPersistentNotification(sender, message, messageId) {
     });
 }
 
-// بروزرسانی موقعیت‌ها
 function updateNotificationsPosition() {
     const { width } = screen.getPrimaryDisplay().workAreaSize;
     const notificationWidth = 300;
@@ -92,7 +91,6 @@ function updateNotificationsPosition() {
     });
 }
 
-// بستن پنجره بر اساس id
 ipcMain.on('close-notification', (event, id) => {
     const win = notifications.find((n) => n.__notificationId === id);
     if (win) {
@@ -107,84 +105,8 @@ ipcMain.on('show-notification', (event, data) => {
 
 /* ------------------------------------ */
 
-function showNotification2() {
-    new Notification({
-        title: 'سلام!',
-        body: 'این یک نوتیفیکیشن از Electron است.',
-    }).show();
-}
-
-function readUser() {
-    if (fs.existsSync(userFile)) {
-        const data = fs.readFileSync(userFile);
-        return JSON.parse(data);
-    }
-    return null;
-}
-function saveUser(name) {
-    axios
-        .post(
-            'http://localhost:3000/api/users',
-            {
-                name,
-            },
-            {
-                proxy: false,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            },
-        )
-        .then((res) => {
-            console.log('Response:', res.data);
-            fs.writeFileSync(
-                userFile,
-                JSON.stringify({ name: res.data.name, id: res.data.id }),
-            );
-        })
-        .catch((err) => {
-            console.error('Error:', err);
-        });
-}
-
-function deleteUser() {
-    if (fs.existsSync(userFile)) {
-        const data = fs.readFileSync(userFile, 'utf8');
-        const obj = JSON.parse(data);
-
-        axios
-            .delete(`http://localhost:3000/api/users/${obj.id}`, {
-                proxy: false,
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            })
-            .then((res) => {
-                console.log('Response:', res.data);
-                fs.writeFileSync(
-                    userFile,
-                    JSON.stringify({ name: res.data.name, id: res.data.id }),
-                );
-            })
-            .catch((err) => {
-                console.error('Error:', err);
-            });
-        fs.unlinkSync(userFile);
-    }
-}
-
-ipcMain.on('save-name', (event, name) => {
-    saveUser(name);
-    mainWindow.loadFile('index.html');
-});
-
-ipcMain.on('logout', () => {
-    deleteUser();
-    mainWindow.loadFile('askName.html');
-});
-
-app.whenReady().then(() => {
-    let user = readUser();
+app.whenReady().then(async () => {
+    const user = userManager.init();
 
     mainWindow = new BrowserWindow({
         width: 1000,
@@ -198,11 +120,28 @@ app.whenReady().then(() => {
     mainWindow.webContents.openDevTools();
 
     if (!user) {
-        mainWindow.loadFile('askName.html');
+        mainWindow.loadFile('public/ask-name/ask-name.html');
     } else {
-        mainWindow.loadFile('index.html');
+        mainWindow.loadFile('public/main/index.html');
         mainWindow.webContents.on('did-finish-load', () => {
             mainWindow.webContents.send('user-data', { user });
         });
     }
+});
+
+ipcMain.on('save-user-data', async (event, { name, host }) => {
+    const user = await userManager.saveUser({
+        name,
+        host,
+    });
+    if (user) {
+        await mainWindow.loadFile('public/main/index.html');
+    } else {
+        await mainWindow.loadFile('public/ask-name/ask-name.html');
+    }
+});
+
+ipcMain.on('logout', async () => {
+    await userManager.deleteUser();
+    await mainWindow.loadFile('public/ask-name/ask-name.html');
 });

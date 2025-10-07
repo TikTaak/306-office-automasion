@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8" />
+    <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
+    <!-- <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+    <!-- <meta http-equiv="X-Content-Security-Policy" content="default-src 'self'; script-src 'self'" /> -->
+
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="message-input.css">
+    <title>Dood</title>
+</head>
+
+<body>
+    <!-- 
+    <div class="container">
+        <span id="server-status">Connecting ...</span>
+        <div class="top" id="online-users"> </div>
+        <div class="bottom">
+            <div class="left-side">
+                <ul id="messages"> </ul>
+                <div class="send-message-box">
+                    <input type="text" id="messageInput" placeholder="پیام خود را وارد کنید">
+                    <input type="button" value="Send" id="sendButton">
+                </div>
+            </div>
+            <div class="right-side">
+                <button id="logout">Logout</button>
+                <span id="username">unknown</span>
+            </div>
+        </div>
+    </div> -->
+
+
+
+    <div class="container">
+        <div class="online-users_container" id="online-users">
+            <!-- Online user card -->
+            <label class="online-users_user-container">
+                <input type="radio" id="${element}" name="online-users" value="${element}">
+                <div class="green-ball"></div><span class="online-user-name">Omid</span>
+            </label>
+            <!-- Online user card End -->
+        </div>
+        <div class="chat_container">
+            <div class="user-chat-title"></div>
+            <div class="chat-messages-container">
+                <div class="chat-messages_list" id="message-list">
+                    <!-- Message -->
+                    <!-- <div class="message sent-message">
+                        <span>Omid</span>
+                        <span>salam chetori ??</span>
+                    </div> -->
+                    <!-- Message End -->
+                    <!-- Message -->
+                    <!-- <div class="message recived-message">
+                        <span>Omid</span>
+                        <span>salam chetori ??</span>
+                    </div> -->
+                    <!-- Message End -->
+
+
+                </div>
+            </div>
+            <div class="chat_message-input">
+                <form id="messageForm">
+                    <div class="messageBox">
+                        <input required="" placeholder="Message..." type="text" id="messageInput" />
+                        <button id="sendButton" type="submit">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 664 663">
+                                <path fill="none"
+                                    d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+                                </path>
+                                <path stroke-linejoin="round" stroke-linecap="round" stroke-width="33.67"
+                                    stroke="#6c6c6c"
+                                    d="M646.293 331.888L17.7538 17.6187L155.245 331.888M646.293 331.888L17.753 646.157L155.245 331.888M646.293 331.888L318.735 330.228L155.245 331.888">
+                                </path>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="utils">
+            <span id="server-status">Connecting ...</span>
+            <button id="logout">Logout</button>
+
+            <span id="username">unknown</span>
+        </div>
+    </div>
+
+
+    <!--         
+        <div class="top"></div>
+
+        <div class="chat-bar">
+            <div class="chat-left">
+                <i class="fa-solid fa-plus"></i>
+                <textarea placeholder="Message#RoomName" required></textarea>
+            </div>
+            <div class="chat-right">
+                <i class="fa-solid fa-paper-plane"></i>
+            </div>
+        </div> -->
+
+    <script src="./renderer.js"></script>
+</body>
+
+</html>

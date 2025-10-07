@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="ask-name.input.css">
+    <link rel="stylesheet" href="ask-name.button.css">
+    <link rel="stylesheet" href="ask-name.common.css">
+
+</head>
+
+<body>
+    <!-- <h2>Please submit your name :</h2> -->
+    <!-- <input id="name" type="text" placeholder="Your name" /> -->
+    <div class="container">
+        <h2> - Retrieve your clinet data - </h2>
+        <div class="adaptive-input">
+            <input type="text" id="name" required>
+            <label placeholder="Your Name" alt="Your Name"></label>
+        </div>
+        <div class="adaptive-input">
+            <input type="text" id="host" value="http://127.0.0.1:3000" required>
+            <label placeholder="Your Host" alt="Your Host (http://192.168.0.1:3000)" ></label>
+        </div>
+
+        <button class="button-28" onclick="saveName()">Submit</button>
+    </div>
+
+
+    <script>
+        const { ipcRenderer } = require("electron");
+
+        function saveName() {
+            const name = document.getElementById("name").value.trim();
+            const host = document.getElementById("host").value.trim();
+            
+            if (name && host) {
+                ipcRenderer.send("save-user-data", {name, host});
+            }
+        }
+
+    </script>
+</body>
+
+</html>

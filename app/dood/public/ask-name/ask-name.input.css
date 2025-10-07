@@ -1,0 +1,55 @@
+/* Reset box-sizing */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+.adaptive-input {
+    position: relative;
+    width: 300px;
+    margin: 1em 0;
+}
+
+.adaptive-input input[type='text'] {
+    width: 100%;
+    height: 4em;
+    padding: 1em;
+    border: 2px solid #1a1a1a;
+    border-radius: 1.5em;
+    background: #fff;
+    outline: none;
+    resize: none;
+}
+
+.adaptive-input label {
+    position: absolute;
+    left: 1em;
+    top: 1em;
+    pointer-events: none;
+    color: #898989;
+    transition: 0.3s ease-in-out, transform 0.2s;
+    background: linear-gradient(to bottom, #fff, #fff);
+    background-size: 100% 5px;
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 0 2px;
+    white-space: nowrap;
+}
+
+/* Move label up on focus or valid input */
+.adaptive-input input:focus + label,
+.adaptive-input input:valid + label {
+    transform: translateY(-1.5em) scale(0.9);
+    color: #2c2c2c;
+}
+
+/* Use alt attribute content when input is invalid */
+.adaptive-input input:invalid + label[alt]:before {
+    content: attr(alt);
+}
+
+/* Show placeholder content normally */
+.adaptive-input label:before {
+    content: attr(placeholder);
+}

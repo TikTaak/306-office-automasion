@@ -1,0 +1,60 @@
+/* From Uiverse.io by vinodjangid07 */
+.messageBox {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #2d2d2d;
+    padding: 1rem;
+    border-radius: 10px;
+    /* border: 1px solid rgb(63, 63, 63); */
+    box-shadow: 10px 10px 10px  rgb(17, 17, 17);
+
+}
+.messageBox:focus-within {
+    /* border: 2px solid rgb(110, 110, 110); */
+}
+
+
+
+
+#messageInput {
+    width: 100%;
+    height: 100%;
+    font-size: large;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-left: 10px;
+    color: white;
+}
+#messageInput:focus ~ #sendButton svg path,
+#messageInput:valid ~ #sendButton svg path {
+    fill: #3c3c3c;
+    stroke: white;
+}
+
+#sendButton {
+    width: fit-content;
+    height: 100%;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+#sendButton svg {
+    height: 25px;
+    transition: all 0.3s;
+}
+#sendButton svg path {
+    transition: all 0.3s;
+}
+#sendButton:hover svg path {
+    fill: #3c3c3c;
+    stroke: white;
+}
