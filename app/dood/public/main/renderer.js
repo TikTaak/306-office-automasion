@@ -28,7 +28,6 @@ ipcRenderer.on('user-data', (event, data) => {
     socket.on('online_users', async (users) => {
         document.getElementById('online-users').innerHTML = null;
 
-        console.log(users);
 
         users.forEach(async (onlineUserId) => {
             //? elemnt is online user id
@@ -114,6 +113,7 @@ ipcRenderer.on('user-data', (event, data) => {
     });
 
     logoutBtn.addEventListener('click', () => {
+        socket.disconnect()
         ipcRenderer.send('logout');
     });
 

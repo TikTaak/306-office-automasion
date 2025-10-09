@@ -146,6 +146,7 @@ html {
     flex-direction: column;
     width: 15rem;
     height: fit-content;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
 
     padding: 1rem;
     margin: 1rem;
@@ -184,21 +185,91 @@ html {
 }
 /* ---------- */
 .utils {
-    width: 13rem;
+    width: 15rem;
     height: 100%;
     border-left: 3px solid rgb(102, 102, 102);
+    display: flex;
+    flex-direction: column;
+}
+
+.server-status-lable {
+    height: 2rem;
+    margin: 0.5rem;
+    background-color: #2d2d2d;
+    color: wheat;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+}
+
+#server-status {
+    height: 3rem;
+    margin: 0.5rem;
+    margin-top: 0;
+    background-color: #2d2d2d;
+    color: wheat;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+#username-lable {
+    height: 2rem;
+    margin: 0.5rem;
+    margin-top: 3rem;
+    background-color: #2d2d2d;
+    color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
+    border-top-right-radius: 1rem;
+    border-top-left-radius: 1rem;
+}
+#username {
+    height: 3rem;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    background-color: #202020;
+    color: wheat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3);
 }
 
 #logout {
-    width: 3.5rem;
-    height: 2.5rem;
-    border-radius: .5rem;
+    height: 2rem;
+    margin: 0.5rem;
+    background-color: #2d2d2d;
+
+    color: wheat;
+    border-bottom-right-radius: 1rem;
+    border-bottom-left-radius: 1rem;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background-color: red;
+    font-size: 1rem;
+    box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.3),
+        inset 3px 3px 20px rgb(26, 26, 26);
+    /* width: 3.5rem;
+    height: 2.5rem;
+    border-radius: 0.5rem;
     border: 0;
     color: wheat;
-    font-size: 1rem;
+    */
 }
 
 #logout:hover {
     cursor: pointer;
+    background-color: rgb(255, 71, 71);
 }

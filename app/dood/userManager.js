@@ -60,7 +60,8 @@ async function saveUser({ name, host }) {
             name: res.data.name,
             host: host,
         };
-        fs.writeFileSync(userFile, JSON.stringify(user));
+        await fs.writeFileSync(userFile, JSON.stringify(user));
+        
         return user;
     } catch (err) {
         console.error('Error saving user:', err);
@@ -82,7 +83,9 @@ async function deleteUser() {
             },
         });
 
-        if (fs.existsSync(userFile)) fs.unlinkSync(userFile);
+        if (await fs.existsSync(userFile)) {
+            await fs.unlinkSync(userFile);
+        }
         user = null;
     } catch (err) {
         console.error('Error deleting user:', err);
