@@ -28,8 +28,8 @@ app.whenReady().then(async () => {
         mainWindow.loadFile('public/ask-name/ask-name.html');
     } else {
         mainWindow.loadFile('public/main/index.html');
-        mainWindow.webContents.on('did-finish-load', () => {
-            mainWindow.webContents.send('user-data', { user });
+        mainWindow.webContents.on('did-finish-load', async () => {
+            await mainWindow.webContents.send('user-data', { user });
         });
     }
 });
@@ -41,9 +41,9 @@ ipcMain.on('save-user-data', async (event, { name, host }) => {
     });
 
     if (user) {
-        await mainWindow.loadFile('public/main/index.html');
-        mainWindow.webContents.on('did-finish-load', () => {
-            mainWindow.webContents.send('user-data', { user });
+        mainWindow.loadFile('public/main/index.html');
+        mainWindow.webContents.on('did-finish-load', async () => {
+            await mainWindow.webContents.send('user-data', { user });
         });
     } else {
         await mainWindow.loadFile('public/ask-name/ask-name.html');
