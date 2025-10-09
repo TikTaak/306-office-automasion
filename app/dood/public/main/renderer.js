@@ -83,7 +83,7 @@ ipcRenderer.on('user-data', (event, data) => {
                 .catch((err) => {
                     console.error('Error:', err);
                 });
-            if (data.toUserId == user.id) { // The message sent for this user
+            if (data.toUserId == user.id) {
                 ipcRenderer.send('show-notification', {
                     sender: senderName + ' : ',
                     message: data.text,
@@ -92,8 +92,8 @@ ipcRenderer.on('user-data', (event, data) => {
 
                 messageList.innerHTML =
                     `
-                    <div class="message recived-message">
-                        <span class="message-sender-name">${senderName}</span>
+                    <div class="message sent-message">
+                        <span class="message-sender-name">${'You'}</span>
                         <span class="message-text">${data.text}</span>
                         <span class="message-time">${data.time}</span>
 
@@ -102,8 +102,8 @@ ipcRenderer.on('user-data', (event, data) => {
             } else {
                 messageList.innerHTML =
                     `
-                    <div class="message sent-message">
-                        <span class="message-sender-name">${'You'}</span>
+                    <div class="message recived-message">
+                        <span class="message-sender-name">${senderName}</span>
                         <span class="message-text">${data.text}</span>
                         <span class="message-time">${data.time}</span>
                     </div>;
