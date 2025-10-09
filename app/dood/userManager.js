@@ -61,7 +61,7 @@ async function saveUser({ name, host }) {
             host: host,
         };
         await fs.writeFileSync(userFile, JSON.stringify(user));
-        
+
         return user;
     } catch (err) {
         console.error('Error saving user:', err);
@@ -76,12 +76,14 @@ async function saveUser({ name, host }) {
 async function deleteUser() {
     if (!user) return;
     try {
+        /*
         await axios.delete(`${user.host}/api/users/${user.id}`, {
             proxy: false,
             headers: {
                 'Content-Type': 'application/json',
             },
         });
+        */
 
         if (await fs.existsSync(userFile)) {
             await fs.unlinkSync(userFile);
