@@ -134,8 +134,12 @@ ipcMain.on('save-user-data', async (event, { name, host }) => {
         name,
         host,
     });
+
     if (user) {
         await mainWindow.loadFile('public/main/index.html');
+        mainWindow.webContents.on('did-finish-load', () => {
+            mainWindow.webContents.send('user-data', { user });
+        });
     } else {
         await mainWindow.loadFile('public/ask-name/ask-name.html');
     }
