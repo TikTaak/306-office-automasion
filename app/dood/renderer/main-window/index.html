@@ -64,6 +64,34 @@
             <button id="logout">Logout</button>
         </div>
     </div>
+
+    <!-- Templates Start -->
+    <template id="online-user-template">
+        <label class="online-users_user-container">
+            <input class="online-user-radio-input" type="radio" name="online-users">
+            <div class="green-ball"></div><span class="online-user-name">${senderName}</span>
+        </label>
+    </template>
+    
+    <template id="sent-message-template">
+        <div class="message sent-message">
+            <span class="message-sender-name">${'You'}</span>
+            <span class="message-text">${data.text}</span>
+            <span class="message-time">${data.time}</span>
+        </div>;
+    </template>
+    
+    <template id="recived-message-template">
+        <div class="message recived-message">
+            <span class="message-sender-name">${senderName}</span>
+            <span class="message-text">${data.text}</span>
+            <span class="message-time">${data.time}</span>
+        </div>;
+    </template>
+
+
+
+    <!-- Templates End -->
     <script src="./renderer.js"></script>
 </body>
 

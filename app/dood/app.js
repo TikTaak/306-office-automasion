@@ -25,9 +25,9 @@ app.whenReady().then(async () => {
     mainWindow.webContents.openDevTools();
 
     if (!user) {
-        mainWindow.loadFile('public/ask-name/ask-name.html');
+        mainWindow.loadFile('renderer/ask-name/ask-name.html');
     } else {
-        mainWindow.loadFile('public/main/index.html');
+        mainWindow.loadFile('renderer/main-window/index.html');
         mainWindow.webContents.on('did-finish-load', async () => {
             await mainWindow.webContents.send('user-data', { user });
         });
@@ -41,18 +41,18 @@ ipcMain.on('save-user-data', async (event, { name, host }) => {
     });
 
     if (user) {
-        mainWindow.loadFile('public/main/index.html');
+        mainWindow.loadFile('renderer/main-window/index.html');
         mainWindow.webContents.on('did-finish-load', async () => {
             await mainWindow.webContents.send('user-data', { user });
         });
     } else {
-        await mainWindow.loadFile('public/ask-name/ask-name.html');
+        await mainWindow.loadFile('renderer/ask-name/ask-name.html');
     }
 });
 
 ipcMain.on('logout', async () => {
     await userManager.deleteUser();
-    await mainWindow.loadFile('public/ask-name/ask-name.html');
+    await mainWindow.loadFile('renderer/ask-name/ask-name.html');
 });
 
 ipcMain.on('close-notification', (event, id) => {

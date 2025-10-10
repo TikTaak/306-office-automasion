@@ -9,6 +9,11 @@ const sendBtn = document.getElementById('sendButton');
 const sendMessageForm = document.getElementById('messageForm');
 const logoutBtn = document.getElementById('logout');
 const messageList = document.getElementById('message-list');
+const onlineUserTemplate = document.getElementById('online-user-template');
+const sentMessageTemplate = document.getElementById('sent-message-template');
+const recivedMessageTemplate = document.getElementById(
+    'recived-message-template',
+);
 
 class socketConnection {
     static instance;
@@ -70,14 +75,25 @@ class socketConnection {
                         console.error('Error:', err);
                     });
                 if (this.user.id != onlineUserId) {
-                    const htmlContent = `
-                            <label class="online-users_user-container">
-                                <input type="radio" id="${onlineUserId}" name="online-users" value="${onlineUserId}">
-                                <div class="green-ball"></div><span class="online-user-name">${senderName}</span>
-                            </label>
-                            `;
-                    document.getElementById('online-users').innerHTML +=
-                        htmlContent;
+                    // TODO: Make this template using modular
+                    const onlineUserTemplateClone =
+                        onlineUserTemplate.content.cloneNode(true);
+                    const input = onlineUserTemplateClone.querySelector(
+                        '.online-user-radio-input',
+                    );
+
+                    const span =
+                        onlineUserTemplateClone.querySelector(
+                            '.online-user-name',
+                        );
+
+                    input.id = onlineUserId;
+                    input.value = onlineUserId;
+                    span.textContent = senderName;
+
+                    document
+                        .getElementById('online-users')
+                        .appendChild(onlineUserTemplateClone);
                 }
             });
         });
@@ -116,24 +132,31 @@ class socketConnection {
                         messageId: data.id,
                     });
 
-                    messageList.innerHTML =
-                        `
-                            <div class="message recived-message">
-                                <span class="message-sender-name">${senderName}</span>
-                                <span class="message-text">${data.text}</span>
-                                <span class="message-time">${data.time}</span>
-        
-                            </div>;
-                            ` + messageList.innerHTML;
+                    const recivedMessageTemplateClone =
+                        recivedMessageTemplate.content.cloneNode(true);
+                    recivedMessageTemplateClone.querySelector(
+                        '.message-sender-name',
+                    ).textContent = senderName;
+                    recivedMessageTemplateClone.querySelector(
+                        '.message-text',
+                    ).textContent = data.text;
+                    recivedMessageTemplateClone.querySelector(
+                        '.message-time',
+                    ).textContent = data.time;
+                    messageList.prepend(recivedMessageTemplateClone);
                 } else {
-                    messageList.innerHTML =
-                        `
-                            <div class="message sent-message">
-                                <span class="message-sender-name">${'You'}</span>
-                                <span class="message-text">${data.text}</span>
-                                <span class="message-time">${data.time}</span>
-                            </div>;
-                            ` + messageList.innerHTML;
+                    const sentMessageTemplateClone =
+                        sentMessageTemplate.content.cloneNode(true);
+                    sentMessageTemplateClone.querySelector(
+                        '.message-sender-name',
+                    ).textContent = 'You';
+                    sentMessageTemplateClone.querySelector(
+                        '.message-text',
+                    ).textContent = data.text;
+                    sentMessageTemplateClone.querySelector(
+                        '.message-time',
+                    ).textContent = data.time;
+                    messageList.prepend(sentMessageTemplateClone);
                 }
             }
         });
@@ -166,7 +189,7 @@ class socketConnection {
                     fromUserId: this.user.id,
                     toUserId: parseInt(targetUserId),
                 });
-                messagesInput.value = '';
+                messagesInput.value = ''; // TODO: Test null on this
             }
         });
     }
