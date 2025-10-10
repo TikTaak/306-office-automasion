@@ -22,7 +22,7 @@ function initSocket(server) {
 
         chatSocket(io, socket, onlineUsers);
 
-        socket.on('disconnect', () => {
+        socket.on('disconnect', async () => {
             for (let [userId, sId] of onlineUsers.entries()) {
                 if (sId === socket.id) {
                     onlineUsers.delete(userId);
