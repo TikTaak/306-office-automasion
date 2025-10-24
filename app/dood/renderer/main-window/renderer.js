@@ -165,7 +165,7 @@ class socketConnection {
     _initButtonsListeners() {
         logoutBtn.addEventListener('click', () => {
             this.socket.disconnect();
-            ipcRenderer.send('logout');
+            ipcRenderer.send('logout'); 
         });
 
         sendBtn.addEventListener('click', async (e) => {

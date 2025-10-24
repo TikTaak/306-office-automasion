@@ -13,7 +13,6 @@ function showPersistentNotification(sender, message, messageId) {
         margin + notifications.length * (notificationHeight + margin);
 
     const id = messageId;
-    // const id = Math.random().toString(36).substr(2, 9);
 
     const win = new BrowserWindow({
         width: notificationWidth,
@@ -44,7 +43,7 @@ function showPersistentNotification(sender, message, messageId) {
       <button id="closeBtn" style="padding:5px 10px; margin-top:5px; cursor:pointer;">بستن</button>
       <script>
         const { ipcRenderer } = require('electron');
-        // گرفتن id از arguments
+        // Get id from arguments
         const args = process.argv.find(a => a.startsWith('--notifId='));
         const notifId = parseInt(args.split('=')[1]);
 
