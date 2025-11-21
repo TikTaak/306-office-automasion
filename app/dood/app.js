@@ -7,6 +7,8 @@ const userManager = require('./userManager.js');
 const notif = require('./src/notification/notif.js');
 let mainWindow;
 
+const DEBUG = false;
+
 const userFile = path.join(app.getPath('userData'), 'user.json');
 // const userFile =  path.join(__dirname, 'user.json');
 console.log(userFile);
@@ -17,6 +19,7 @@ app.whenReady().then(async () => {
     mainWindow = new BrowserWindow({
         width: 1000,
         height: 800,
+        title: "dood v"+app.getVersion(),
         backgroundColor: 'gray',
         icon: path.join(__dirname, 'assets', 'icon.ico'),
         webPreferences: {
@@ -24,7 +27,9 @@ app.whenReady().then(async () => {
             contextIsolation: false,
         },
     });
-    mainWindow.webContents.openDevTools();
+    if (DEBUG) {
+        mainWindow.webContents.openDevTools();
+    }
 
     if (!user) {
         mainWindow.loadFile('renderer/ask-name/ask-name.html');
@@ -36,7 +41,8 @@ app.whenReady().then(async () => {
     }
 });
 
-if (squirrel) { // TODO: Exit app if we are in setup.
+if (squirrel) {
+    // TODO: Exit app if we are in setup.
     return;
 }
 
@@ -71,4 +77,8 @@ ipcMain.on('close-notification', (event, id) => {
 
 ipcMain.on('show-notification', (event, data) => {
     notif.showPersistentNotification(data.sender, data.message, data.messageId);
+});
+
+ipcMain.handle('get-app-version', () => {
+    return app.getVersion();
 });
