@@ -5,6 +5,7 @@ function showSettingsWindow() {
         width: 600,
         height: 400,
         backgroundColor: 'gray',
+        icon: path.join(__dirname, 'assets', 'icon.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,

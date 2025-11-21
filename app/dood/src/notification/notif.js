@@ -17,6 +17,7 @@ function showPersistentNotification(sender, message, messageId) {
     const win = new BrowserWindow({
         width: notificationWidth,
         height: notificationHeight,
+        icon: path.join(__dirname, 'assets', 'icon.ico'),
         x: width - notificationWidth - margin,
         y: yPosition,
         frame: false,
@@ -27,7 +28,7 @@ function showPersistentNotification(sender, message, messageId) {
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
-            additionalArguments: [`--notifId=${id}`], // فرستادن id به رندرر
+            additionalArguments: [`--notifId=${id}`], // Send 'id' to renderer
         },
     });
 
@@ -91,4 +92,4 @@ ipcMain.on('show-notification', (event, data) => {
 });
 */
 
-module.exports = {showPersistentNotification, notifications }
+module.exports = { showPersistentNotification, notifications };
