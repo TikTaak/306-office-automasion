@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -17,6 +18,7 @@ app.whenReady().then(async () => {
         width: 1000,
         height: 800,
         backgroundColor: 'gray',
+        icon: path.join(__dirname, 'assets', 'icon.ico'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -33,6 +35,10 @@ app.whenReady().then(async () => {
         });
     }
 });
+
+if (squirrel) { // TODO: Exit app if we are in setup.
+    return;
+}
 
 ipcMain.on('save-user-data', async (event, { name, host }) => {
     const user = await userManager.saveUser({
