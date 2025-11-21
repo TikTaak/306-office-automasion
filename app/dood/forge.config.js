@@ -3,6 +3,20 @@ const { FuseV1Options, FuseVersion } = require('@electron/fuses');
 const path = require('path');
 
 module.exports = {
+    publishers: [
+        {
+            name: '@electron-forge/publisher-github',
+            config: {
+                repository: {
+                    owner: 'TikTaak',
+                    name: '306-office-automasion',
+                },
+                prerelease: false,
+                draft: true,
+            },
+        },
+    ],
+    
     packagerConfig: {
         asar: true,
         icon: 'app.ico',
