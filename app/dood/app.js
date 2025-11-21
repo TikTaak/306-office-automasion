@@ -6,8 +6,12 @@ const path = require('path');
 const axios = require('axios');
 const userManager = require('./userManager.js');
 const notif = require('./src/notification/notif.js');
-let mainWindow;
+const { updateElectronApp } = require('update-electron-app');
+try {
+    updateElectronApp();
+} catch (error) {}
 
+let mainWindow;
 const DEBUG = false;
 
 const userFile = path.join(app.getPath('userData'), 'user.json');
