@@ -1,6 +1,6 @@
 {
     "name": "dood",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "description": "Dood is a local network messaging app.",
     "main": "app.js",
     "scripts": {

@@ -8,6 +8,10 @@ const messagesInput = document.getElementById('messageInput');
 const sendBtn = document.getElementById('sendButton');
 const sendMessageForm = document.getElementById('messageForm');
 const logoutBtn = document.getElementById('logout');
+
+const checkForUpdateBtn = document.getElementById('check-for-update');
+const updateStatusEl = document.getElementById('update-status');
+
 const messageList = document.getElementById('message-list');
 const onlineUserTemplate = document.getElementById('online-user-template');
 const sentMessageTemplate = document.getElementById('sent-message-template');
@@ -165,7 +169,20 @@ class socketConnection {
     _initButtonsListeners() {
         logoutBtn.addEventListener('click', () => {
             this.socket.disconnect();
-            ipcRenderer.send('logout'); 
+            ipcRenderer.send('logout');
+        });
+
+        checkForUpdateBtn.addEventListener('click', async () => {
+            updateStatusEl.textContent = 'Checking for updates...';
+            const result = await ipcRenderer.invoke('check-for-updates');
+
+            if (result.updateAvailable) {
+                updateStatusEl.textContent = `Update available: ${result.version}. Installing...`;
+            } else if (result.error) {
+                updateStatusEl.textContent = `Error checking updates: ${result.error}`;
+            } else {
+                updateStatusEl.textContent = 'No updates available';
+            }
         });
 
         sendBtn.addEventListener('click', async (e) => {

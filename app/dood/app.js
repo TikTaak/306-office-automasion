@@ -1,4 +1,5 @@
 const { app, BrowserWindow, ipcMain, screen } = require('electron');
+const { autoUpdater } = require('electron-updater');
 const squirrel = require('electron-squirrel-startup');
 const fs = require('fs');
 const path = require('path');
@@ -19,9 +20,10 @@ app.whenReady().then(async () => {
     mainWindow = new BrowserWindow({
         width: 1000,
         height: 800,
-        title: "dood v"+app.getVersion(),
+        title: 'dood v' + app.getVersion(),
         backgroundColor: 'gray',
         icon: path.join(__dirname, 'assets', 'icon.ico'),
+        preload: path.join(__dirname, 'renderer', 'update.preload.js'),
         webPreferences: {
             nodeIntegration: true,
             contextIsolation: false,
@@ -81,4 +83,19 @@ ipcMain.on('show-notification', (event, data) => {
 
 ipcMain.handle('get-app-version', () => {
     return app.getVersion();
+});
+
+ipcMain.handle('check-for-updates', async () => {
+    try {
+        const update = await autoUpdater.checkForUpdates();
+        return update.updateInfo.version
+            ? { updateAvailable: true, version: update.updateInfo.version }
+            : { updateAvailable: false };
+    } catch (err) {
+        return { updateAvailable: false, error: err.message };
+    }
+});
+
+autoUpdater.on('update-downloaded', () => {
+    autoUpdater.quitAndInstall();
 });

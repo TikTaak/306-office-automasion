@@ -1,6 +1,9 @@
 const { ipcRenderer } = require('electron');
 const axios = require('axios');
 
+const checkForUpdateBtn = document.getElementById('check-for-update');
+const updateStatusEl = document.getElementById('update-status');
+
 function saveName() {
     const name = document.getElementById('name').value.trim();
     const host = document.getElementById('host').value.trim();
@@ -51,4 +54,17 @@ document.getElementById('host').addEventListener('input', async () => {
     await pingServiceScenario();
     await pingService();
     console.log('element data changed');
+});
+
+checkForUpdateBtn.addEventListener('click', async () => {
+    updateStatusEl.textContent = 'Checking for updates...';
+    const result = await ipcRenderer.invoke('check-for-updates');
+
+    if (result.updateAvailable) {
+        updateStatusEl.textContent = `Update available: ${result.version}. Installing...`;
+    } else if (result.error) {
+        updateStatusEl.textContent = `Error checking updates: ${result.error}`;
+    } else {
+        updateStatusEl.textContent = 'No updates available';
+    }
 });
