@@ -5,19 +5,27 @@
 ### Power shell:
 - add:
   
-    ```setx GITHUB_TOKEN "your_personal_token_here"```
+    ```bash
+    setx GITHUB_TOKEN "your_personal_token_here"
+    ```
 
 - remove:
 
-    ```setx GITHUB_TOKEN ""```
+    ```bash
+    setx GITHUB_TOKEN ""
+    ```
 
 ### Cmd:
 
 
 - add:
   
-    ```set GITHUB_TOKEN=your_personal_access_token```
+    ```bash
+    set GITHUB_TOKEN=your_personal_access_token
+    ```
 
 - remove:
   
-    ```set GITHUB_TOKEN=```
+    ```bash
+    set GITHUB_TOKEN=
+    ```
